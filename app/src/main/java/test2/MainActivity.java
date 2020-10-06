@@ -1,4 +1,4 @@
-package hichampackage;
+package test2;
 
 import android.app.Activity;
 import android.content.Intent;
