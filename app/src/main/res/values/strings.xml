@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VideoTest</string>
+    <string name="telecharger_la_video_click_on_the_button">Telecharger la video: click on the button</string>
+    <string name="button_go_to_mkyong_com">Download</string>
 </resources>
