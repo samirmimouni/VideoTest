@@ -51,13 +51,13 @@ public class ConnectThread extends Thread{
     }
 
 
-    public  void  cancel(){
+ /*   public  void  cancel(){
         try {
-            mmSoket.close();
+            //mmSoket.close();
         }
         catch (IOException e){
             e.getMessage();
         }
-    }
+    }*/
 }
 
