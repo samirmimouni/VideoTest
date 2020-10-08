@@ -185,10 +185,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     public void turnOnOffBT(){
         if(mBluetoothAdapter == null){
-            Log.d(TAG, "enableDisableBT: Does not have BT capabilities.");
+            Log.d(TAG, "turnOnOffBT: Does not have BT capabilities.");
         }
         if(!mBluetoothAdapter.isEnabled()){
-            Log.d(TAG, "enableDisableBT: enabling BT.");
+            Log.d(TAG, "turnOnOffBT: enabling BT.");
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableBTIntent);
 
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             registerReceiver(mBroadcastReceiverFirst, BTIntent);
         }
         if(mBluetoothAdapter.isEnabled()){
-            Log.d(TAG, "enableDisableBT: disabling BT.");
+            Log.d(TAG, "turnOnOffBT: disabling BT.");
             mBluetoothAdapter.disable();
 
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
 
     public void turnOnOffDiscoverable(View view) {
-        Log.d(TAG, "btnEnableDisable_Discoverable: Making device discoverable for 300 seconds.");
+        Log.d(TAG, "turnOnOffDiscoverable: Making device discoverable for 500 seconds.");
 
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 500);
@@ -243,11 +243,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void discoverButton(View view) {
-        Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
+        Log.d(TAG, "discoverButton: Looking for unpaired devices.");
 
         if(mBluetoothAdapter.isDiscovering()){
             mBluetoothAdapter.cancelDiscovery();
-            Log.d(TAG, "btnDiscover: Canceling discovery.");
+            Log.d(TAG, "discoverButton: Canceling discovery.");
 
 
             checkBTPermissions();
