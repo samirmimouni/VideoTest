@@ -1,65 +1,75 @@
 package test2;
-
+/*
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.util.Log;
+
+import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 import java.util.UUID;
 
-public class AcceptThread extends Thread{
-    BluetoothAdapter mBluetoothAdapter;
-    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
-    private static final String NAME = "SARO";
+import androidx.appcompat.app.AppCompatActivity;
 
-    private final BluetoothServerSocket mmServerSoket;
+
+private class AcceptThread extends Thread {
+    private static final int REQUEST_ENABLE_BT = 1;
+    private final BluetoothServerSocket mmServerSocket;
+    private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+
     public AcceptThread() {
+        // Use a temporary object that is later assigned to mmServerSocket
+        // because mmServerSocket is final.
         BluetoothServerSocket tmp = null;
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            //startActivity
+        }
 
         try {
-            tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME,MY_UUID);
+            // MY_UUID is the app's UUID string, also used by the client code.
+           // tmp = bluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
+        } catch (IOException e) {
+          //  Log.e(TAG, "Socket's listen() method failed", e);
         }
-        catch (IOException e){
-            e.getMessage();
-        }
-
-        mmServerSoket = tmp;
-
+        mmServerSocket = tmp;
     }
 
-    public void run (){
 
+    public void run() {
         BluetoothSocket socket = null;
-        while (true){
+        // Keep listening until exception occurs or a socket is returned.
+        while (true) {
             try {
-                socket = mmServerSoket.accept();
-
-            }
-            catch (IOException e){
+                socket = mmServerSocket.accept();
+            } catch (IOException e) {
+                Log.e(TAG, "Socket's accept() method failed", e);
                 break;
             }
 
-            if (socket!=null){
-                //do some thing
-                //doSomeThingConnection(socket);
-                try {
-                    mmServerSoket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (socket != null) {
+                // A connection was accepted. Perform work associated with
+                // the connection in a separate thread.
+                manageMyConnectedSocket(socket);
+                mmServerSocket.close();
                 break;
-
             }
         }
-
     }
 
-    public  void  cancel(){
+    // Closes the connect socket and causes the thread to finish.
+    public void cancel() {
         try {
-            mmServerSoket.close();
-        }
-        catch (IOException e){
-            e.getMessage();
+            mmServerSocket.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Could not close the connect socket", e);
         }
     }
-}
+}*/
