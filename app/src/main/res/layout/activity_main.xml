@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnDiscoverable_on_off"
-        android:onClick="btnEnableDisable_Discoverable"
+        android:onClick="turnOnOffDiscoverable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnFindUnpairedDevices"
         android:text="Discover"
-        android:onClick="btnDiscover"/>
+        android:onClick="discoverButton"/>
 
     <ListView
         android:layout_below="@+id/btnFindUnpairedDevices"
