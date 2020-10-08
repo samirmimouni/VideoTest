@@ -14,10 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 
 
@@ -34,11 +32,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView lvNewDevices;
 
 
-    // Create a BroadcastReceiver for ACTION_FOUND
+    // Creattion d'un BroadcastReceiver pour ACTION_FOUND pour récupérer l'état des appareils quand on recherche des device.
+
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            // When discovery finds a device
+            //Les valeurs possibles pour ces champs sont STATE_TURNING_ON, STATE_ON, STATE_TURNING_OFFet STATE_OFF.
             if (action.equals(mBluetoothAdapter.ACTION_STATE_CHANGED)) {
                 final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, mBluetoothAdapter.ERROR);
 
@@ -60,10 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     };
 
-    /**
-     * Broadcast Receiver for changes made to bluetooth states such as:
-     * 1) Discoverability mode on/off or expire.
-     */
+    //Broadcast receiver pour les changements de mode au cas ou la découvrabilité est mis en off ou  expire au bout de 300 secondes
     private final BroadcastReceiver mBroadcastReceiver2 = new BroadcastReceiver() {
 
         @Override
@@ -73,13 +69,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if (action.equals(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED)) {
 
                 int mode = intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, BluetoothAdapter.ERROR);
-
+                //Les valeurs possibles pour les champs de découvrabilité sont Discoverability Enabled, Discoverability Disabled. Able to receive connections, Discoverability Disabled. Not able to receive connections,  Connecting.... et Connected.
                 switch (mode) {
-                    //Device is in Discoverable Mode
                     case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
                         Log.d(TAG, "mBroadcastReceiver2: Discoverability Enabled.");
                         break;
-                    //Device not in discoverable mode
                     case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
                         Log.d(TAG, "mBroadcastReceiver2: Discoverability Disabled. Able to receive connections.");
                         break;
@@ -131,16 +125,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             if(action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)){
                 BluetoothDevice mDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                //3 cases:
-                //case1: bonded already
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED){
                     Log.d(TAG, "BroadcastReceiver: BOND_BONDED.");
                 }
-                //case2: creating a bone
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDING) {
                     Log.d(TAG, "BroadcastReceiver: BOND_BONDING.");
                 }
-                //case3: breaking a bond
                 if (mDevice.getBondState() == BluetoothDevice.BOND_NONE) {
                     Log.d(TAG, "BroadcastReceiver: BOND_NONE.");
                 }
@@ -252,13 +242,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    /**
-     * This method is required for all devices running API23+
-     * Android must programmatically check the permissions for bluetooth. Putting the proper permissions
-     * in the manifest is not enough.
-     *
-     * NOTE: This will only execute on versions > LOLLIPOP because it is not needed otherwise.
-     */
+ // Cette méthode est requise pour tous les appareils exécutant API23 +
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void checkBTPermissions() {
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
@@ -285,8 +270,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Log.d(TAG, "onItemClick: deviceName = " + deviceName);
         Log.d(TAG, "onItemClick: deviceAddress = " + deviceAddress);
 
-        //create the bond.
-        //NOTE: Requires API 17+? I think this is JellyBean
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2){
             Log.d(TAG, "Trying to pair with " + deviceName);
             mBTDevices.get(i).createBond();
