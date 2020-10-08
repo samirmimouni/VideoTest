@@ -36,12 +36,14 @@ public class MainActivity2 extends Activity {
                 //request.setTitle("Ma_vidéo.mp4");
                 request.setDescription("Téléchargement de votre vidéo depuis le lien");
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-                request.setDestinationInExternalFilesDir(getApplication().getApplicationContext(), Environment.DIRECTORY_DOCUMENTS, "Ma_vidéo.mp4");
+             //   request.setDestinationUri(Uri.parse("/MAVIDEO.mp4"));
+                request.setDestinationInExternalFilesDir(getApplication().getApplicationContext(), Environment.DIRECTORY_MOVIES, "Ma_vidéo.mp4");
+
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 Long reference = downloadManager.enqueue(request);
 
 
-            }
+        }
 
         });
     }
